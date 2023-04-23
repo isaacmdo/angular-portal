@@ -1,0 +1,39 @@
+<div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+    <div class="grid justify-content-center p-2 lg:p-0" style="min-width:80%">
+        <div class="col-12 mt-5 xl:mt-0 text-center">
+            <img src="../../../assets/imgs/logos/AngularJS-Shield.svg" alt="Sakai logo" class="mb-5" style="width:81px; height:60px;">
+        </div>
+        <div class="col-12 xl:col-6" style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
+            <div class="h-full w-full m-0 py-7 px-4" style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
+                <button pButton type="button" icon="pi pi-arrow-left" class="mb-5" routerLink="/login" style="width: 50px;" iconPos="left"></button>
+
+
+                <p-toast></p-toast>
+                <div class="card">
+                    <h5>Preencha os dados</h5>
+                    <div class="p-fluid p-formgrid grid">
+                        <div class="field col-12">
+                            <label htmlFor="name">Nome</label>
+                            <input pInputText id="name" [(ngModel)]="user.name" placeholder="Digite seu nome" type="text" />
+                        </div>
+                        <div class="field col-12"> 
+                            <label for="email">Email</label>
+                            <input id="email" type="text"  name="email" [(ngModel)]="user.email" placeholder="Digite seu email" pInputText class="w-full mb-3" style="padding:1rem;">
+                        </div>
+                        <div class="field col-12"> 
+                            <label for="password">Senha</label>
+                            <p-password id="password" [(ngModel)]="user.password" name="password" placeholder="Digita a senha" [toggleMask]="true" styleClass="w-full mb-3"></p-password>
+                        </div>
+                        <div class="field col-12"> 
+                            <label for="password2">Senha novamente</label>
+                            <p-password id="password2" [(ngModel)]="user.passwordConfirm" name="password2" placeholder="Repita a senha" [toggleMask]="true" styleClass="w-full mb-3"></p-password>
+                        </div>
+                        <button pButton pRipple label="Registar" (click)="register()" class="w-full p-3 text-xl" ></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

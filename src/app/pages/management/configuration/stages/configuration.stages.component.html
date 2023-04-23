@@ -1,0 +1,68 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <div class="grid">
+                <div class="col-12">
+                    <div class="card">
+                            <div class="col-12 align-items-center justify-content-center">
+                                <h5>Paises</h5>
+                                <p-fileUpload chooseLabel="Selecionar" cancelLabel="Cancelar" uploadLabel="Enviar" name="demo[]" url="./upload.php" (onUpload)="onUpload($event)"
+                                            maxFileSize="1000000">
+                                    <ng-template pTemplate="content">
+                                        <ul *ngIf="uploadedFiles.length">
+                                            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                                        </ul>
+                                    </ng-template>
+                                </p-fileUpload>
+                                <h5>Estados</h5>
+                                <p-fileUpload chooseLabel="Selecionar" cancelLabel="Cancelar" uploadLabel="Enviar" name="demo[]" url="./upload.php" (onUpload)="onUpload($event)"
+                                            maxFileSize="1000000">
+                                    <ng-template pTemplate="content">
+                                        <ul *ngIf="uploadedFiles.length">
+                                            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                                        </ul>
+                                    </ng-template>
+                                </p-fileUpload>
+                                <h5>Cidades</h5>
+                                <p-fileUpload chooseLabel="Selecionar" cancelLabel="Cancelar" uploadLabel="Enviar" name="demo[]" url="./upload.php" (onUpload)="onUpload($event)"
+                                            maxFileSize="1000000">
+                                    <ng-template pTemplate="content">
+                                        <ul *ngIf="uploadedFiles.length">
+                                            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                                        </ul>
+                                    </ng-template>
+                                </p-fileUpload>
+                                <h5>Categorias</h5>
+                                <p-fileUpload chooseLabel="Selecionar" cancelLabel="Cancelar" uploadLabel="Enviar" name="demo[]" url="./upload.php" (onUpload)="onUpload($event)"
+                                            maxFileSize="1000000">
+                                    <ng-template pTemplate="content">
+                                        <ul *ngIf="uploadedFiles.length">
+                                            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                                        </ul>
+                                    </ng-template>
+                                </p-fileUpload>
+                                <h5>SubCategorias</h5>
+                                <p-fileUpload chooseLabel="Selecionar" cancelLabel="Cancelar" uploadLabel="Enviar" name="demo[]" url="./upload.php" (onUpload)="onUpload($event)"
+                                            maxFileSize="1000000">
+                                    <ng-template pTemplate="content">
+                                        <ul *ngIf="uploadedFiles.length">
+                                            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                                        </ul>
+                                    </ng-template>
+                                </p-fileUpload>
+                                <h5>Produtos</h5>
+                                <p-fileUpload chooseLabel="Selecionar" cancelLabel="Cancelar" uploadLabel="Enviar" name="demo[]" url="./upload.php" (onUpload)="onUpload($event)"
+                                            maxFileSize="1000000">
+                                    <ng-template pTemplate="content">
+                                        <ul *ngIf="uploadedFiles.length">
+                                            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                                        </ul>
+                                    </ng-template>
+                                </p-fileUpload>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

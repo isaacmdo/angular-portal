@@ -1,0 +1,54 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <div class="grid">
+                <div class="col-12">
+                    <div class="card">
+                        <h5>Produto</h5>
+                            <div class="col-12 flex align-items-center">
+                                <div class="p-fluid">
+                                    <div class="field">
+                                        <label for="ProductName">Nome</label>
+                                        <input pInputText id="ProductName" type="text" />
+                                    </div>
+                                    <div class="field">
+                                        <label for="ProductDescription">Descrição</label>
+                                        <input pInputText id="ProductDescription" type="text" />
+                                    </div>
+                                    <div class="field">
+                                        <label for="ProductCategory">Categoria</label>
+                                        <p-dropdown [options]="cities" [(ngModel)]="selectedCity1" id="ProductCategory" placeholder="Selecione uma categoria" optionLabel="name" [showClear]="true"></p-dropdown>
+                                    </div>
+                                    <div class="field">
+                                        <label for="ProductSubCategory">SubCategoria</label>
+                                        <p-dropdown [options]="cities" [(ngModel)]="selectedCity1" id="ProductSubCategory" placeholder="Selecione uma subcategoria" optionLabel="name" [showClear]="true"></p-dropdown>
+                                    </div>
+                                    <p-button label="Cadastrar"></p-button>
+                                </div>
+                            </div>
+                            <!-- <div class="col-2">
+                                <p-divider layout="vertical">
+                                    <b>OU</b>
+                                </p-divider>
+                            </div> -->
+                            <p-divider align="center">
+                                <b>OU</b>
+                            </p-divider>
+                            <div class="col-12 align-items-center justify-content-center">
+                                <h5>Selecione o arquivo de importação</h5>
+                                <p-fileUpload chooseLabel="Selecionar" cancelLabel="Cancelar" uploadLabel="Enviar" name="demo[]" url="./upload.php" (onUpload)="onUpload($event)"
+                                            maxFileSize="1000000">
+                                    <ng-template pTemplate="content">
+                                        <ul *ngIf="uploadedFiles.length">
+                                            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                                        </ul>
+                                    </ng-template>
+                                </p-fileUpload>
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

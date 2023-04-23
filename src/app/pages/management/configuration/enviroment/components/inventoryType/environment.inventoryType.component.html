@@ -1,0 +1,91 @@
+
+            <!--#region Inventory -->
+            <div class="card-container" >
+                <p-toolbar styleClass="mb-4">
+                    <ng-template pTemplate="left">
+                        <div class="my-2">
+                            <button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNewInventoryType()"></button>
+                        </div>
+                    </ng-template>
+                </p-toolbar>
+                <p-table #dt [value]="inventoryTypes" [columns]="cols" responsiveLayout="scroll" [rows]="10"  [globalFilterFields]="['id','name','isActive']"   [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  [rowHover]="true" dataKey="id">
+                    <ng-template pTemplate="caption">
+                        <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                            <h5 class="m-0">Tipos de inventário</h5>
+                            <span class="block mt-2 md:mt-0 p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Pesquisar..." />
+                            </span>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="id">Código <p-sortIcon field="id"></p-sortIcon></th>
+                            <th pSortableColumn="name">Nome <p-sortIcon field="name"></p-sortIcon></th>
+                            <th pSortableColumn="isActive">Status <p-sortIcon field="isActive"></p-sortIcon></th>
+                            <th></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-inventoryType>
+                        <tr>
+                            <td style="width:14%; min-width:10rem;">
+                                <span class="p-column-title">Código</span>
+                                {{inventoryType.id}}
+                            </td>
+                            <td style="width:14%; min-width:10rem;">
+                                <span class="p-column-title">Nome</span>
+                                {{inventoryType.name}}
+                            </td>
+                            <td style="width:14%; min-width:10rem;">
+                                <span class="p-column-title">Status</span>
+                                <span [class]="'inventoryType-badge status-' + (inventoryType.isActive == true ? 'active' : 'inactive')">Ativo</span>
+                            </td>
+                            <td>
+                                <div class="flex">
+                                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-warning mr-2" (click)="editInventoryType(inventoryType)"></button>
+                                    <button pButton pRipple icon="pi pi-lock" class="p-button-rounded p-button-danger mr-2" [disabled]="!inventoryType.isActive" (click)="inventoryTypeDeactive(inventoryType)"></button>
+                                    <button pButton pRipple icon="pi pi-lock-open" class="p-button-rounded p-button-success" [disabled]="inventoryType.isActive" (click)="inventoryTypeActive(inventoryType)"></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <p-dialog [(visible)]="inventoryTypeDialog" [style]="{width: '450px'}" header="Tipo" [modal]="true" class="p-fluid">
+                    <ng-template pTemplate="content">
+                        <div class="field">
+                            <label for="name">Name</label>
+                            <input type="text" pInputText id="name" [(ngModel)]="inventoryType.name" ngDefaultControl required autofocus [ngClass]="{'ng-invalid ng-dirty' : inventoryTypeSubmitted && !inventoryType.name}"/>
+                            <small class="ng-dirty ng-invalid" *ngIf="inventoryTypeSubmitted && !inventoryType.name">Nome é obrigatório</small>
+                        </div>
+                    </ng-template>
+        
+                    <ng-template pTemplate="footer">
+                        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="inventoryTypeHideDialog()"></button>
+                        <button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text" (click)="saveInventoryType()"></button>
+                    </ng-template>
+                </p-dialog>
+                <p-dialog [(visible)]="deactiveInventoryTypeDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+                    <div class="flex align-items-center justify-content-center">
+                        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                        <span *ngIf="inventoryType">Tem certeza que deseja desativar?<b> O tipo {{inventoryType.name}}</b>?</span>
+                    </div>
+                    <ng-template pTemplate="footer">
+                        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deactiveUserDialog = false"></button>
+                        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="inventoryTypeConfirmDeactive()"></button>
+                    </ng-template>
+                </p-dialog>
+        
+                <p-dialog [(visible)]="activeInventoryTypeDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+                    <div class="flex align-items-center justify-content-center">
+                        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                        <span *ngIf="inventoryType">Tem certeza que deseja ativar?<b> O tipo {{inventoryType.name}}</b>?</span>
+                    </div>
+                    <ng-template pTemplate="footer">
+                        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="activeUserDialog = false"></button>
+                        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="inventoryTypeConfirmActive()"></button>
+                    </ng-template>
+                </p-dialog>
+            </div>
+            <!--#endregion Inventory  -->
+
+

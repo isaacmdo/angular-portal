@@ -1,0 +1,101 @@
+    <p-toast></p-toast>
+            <!--#region businessUnit -->
+            <div class="card-container" >
+                <p-toolbar styleClass="mb-4">
+                    <ng-template pTemplate="left">
+                        <div class="my-2">
+                            <button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success mr-2" (click)="showCompanies()"></button>
+                        </div>
+                    </ng-template>
+                </p-toolbar>
+                <p-table #dt [value]="businessUnits" [columns]="cols" responsiveLayout="scroll" [rows]="10"  [globalFilterFields]="['id','company.name','isActive']"   [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  [rowHover]="true" dataKey="id">
+                    <ng-template pTemplate="caption">
+                        <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                            <h5 class="m-0">Unidades de negócio</h5>
+                            <span class="block mt-2 md:mt-0 p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Pesquisar..." />
+                            </span>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="id">Código <p-sortIcon field="id"></p-sortIcon></th>
+                            <th pSortableColumn="company.name">Nome <p-sortIcon field="name"></p-sortIcon></th>
+                            <th pSortableColumn="isActive">Status <p-sortIcon field="isActive"></p-sortIcon></th>
+                            <th></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-businessUnit>
+                        <tr>
+                            <td style="width:14%; min-width:10rem;">
+                                <span class="p-column-title">Código</span>
+                                {{businessUnit.id}}
+                            </td>
+                            <td style="width:14%; min-width:10rem;">
+                                <span class="p-column-title">Nome</span>
+                                {{businessUnit.company.name}}
+                            </td>
+                            <td style="width:14%; min-width:10rem;">
+                                <span class="p-column-title">Status</span>
+                                <span [class]="'businessUnit-badge status-' + (businessUnit.isActive == true ? 'active' : 'inactive')">Ativo</span>
+                            </td>
+                            <td>
+                                <div class="flex">
+                                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-warning mr-2" (click)="editBusinessUnit(businessUnit)"></button>
+                                    <button pButton pRipple icon="pi pi-lock" class="p-button-rounded p-button-danger mr-2" [disabled]="!businessUnit.isActive" (click)="businessUnitDeactive(businessUnit)"></button>
+                                    <button pButton pRipple icon="pi pi-lock-open" class="p-button-rounded p-button-success" [disabled]="businessUnit.isActive" (click)="businessUnitActive(businessUnit)"></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <p-dialog [(visible)]="businessUnitDialog" [style]="{width: '450px'}" header="Tipo" [modal]="true" class="p-fluid">
+                    <ng-template pTemplate="content">
+                        <div class="field">
+                            <label for="name">Name</label>
+                            <input type="text" pInputText id="name" [(ngModel)]="businessUnit.company.name" ngDefaultControl required autofocus [ngClass]="{'ng-invalid ng-dirty' : businessUnitsubmitted && !businessUnit.company.name}"/>
+                            <small class="ng-dirty ng-invalid" *ngIf="businessUnitsubmitted && !businessUnit.company.name">Nome é obrigatório</small>
+                        </div>
+                    </ng-template>
+        
+                    <ng-template pTemplate="footer">
+                        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="businessUnitHideDialog()"></button>
+                        <button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text" (click)="savebusinessUnit()"></button>
+                    </ng-template>
+                </p-dialog>
+                <p-dialog [(visible)]="deactiveBusinessUnitDialog" *ngIf="businessUnit" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+                    <div class="flex align-items-center justify-content-center">
+                        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                        <span *ngIf="businessUnit">Tem certeza que deseja desativar?<b> O tipo {{businessUnit.company.name}}</b>?</span>
+                    </div>
+                    <ng-template pTemplate="footer">
+                        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deactivebusinessUnitDialog = false"></button>
+                        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="businessUnitConfirmDeactive()"></button>
+                    </ng-template>
+                </p-dialog>
+        
+                <p-dialog [(visible)]="activeBusinessUnitDialog" *ngIf="businessUnit" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+                    <div class="flex align-items-center justify-content-center">
+                        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                        <span *ngIf="businessUnit">Tem certeza que deseja ativar?<b> O tipo {{businessUnit.company.name}}</b>?</span>
+                    </div>
+                    <ng-template pTemplate="footer">
+                        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="activebusinessUnitDialog = false"></button>
+                        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="businessUnitConfirmActive()"></button>
+                    </ng-template>
+                </p-dialog>
+
+                <p-dialog *ngIf="company" header="Confirmação" [(visible)]="companySelectedDialog" [modal]="true" [style]="{width: '50vw'}"
+                    [draggable]="false" [resizable]="false">
+                        <p class="m-0">
+                            Você gostaria de adiconar a empresa <b>"{{company.name}}"</b> como unidade de negócio ?
+                        </p>
+                        <ng-template pTemplate="footer">
+                            <p-button icon="pi pi-check" (click)="saveBusinessUnit()" label="Adicionar" styleClass="p-button-text"></p-button>
+                        </ng-template>
+                </p-dialog>
+            </div>
+            <!--#endregion businessUnit  -->
+
+
